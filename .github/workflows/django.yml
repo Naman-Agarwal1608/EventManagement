@@ -28,3 +28,4 @@ jobs:
     - name: Run Tests
       run: |
         python club/manage.py test
+        python club/manage.py runserver
