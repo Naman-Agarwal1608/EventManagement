@@ -27,4 +27,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python club/manage.py test.test_server_start
+        python club/manage.py test tests.test_server_start
