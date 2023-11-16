@@ -1,5 +1,4 @@
 from django.test import LiveServerTestCase
-from django.urls import reverse
 import requests
 import time
 
@@ -15,8 +14,7 @@ class ServerStartTestCase(LiveServerTestCase):
         # Attempt to send a request to the server
         try:
             # Replace 'index' with your URL name or path
-            response = requests.get(
-                self.live_server_url)
+            response = requests.get(self.live_server_url)
             # Check if the response status is OK
             self.assertEqual(response.status_code, 200)
         except requests.RequestException as e:
