@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+from http.client import HTTPResponse
+from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 import calendar
 from calendar import HTMLCalendar
@@ -47,6 +48,15 @@ def list_venues(request):
 def show_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
     return render(request, 'events/show_venue.html', {'venue': venue})
+
+
+def search_venues(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        venues = Venue.objects.filter(name__contains=searched)
+        return render(request, "events/search_venues.html", {'searched': searched, 'venues': venues})
+    else:
+        return HttpResponseBadRequest("You should not try this...")
 
 
 def add_venue(request):
