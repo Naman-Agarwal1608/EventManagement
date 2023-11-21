@@ -16,6 +16,7 @@
             <li> Website: <a href={{venue.web}}> {{ venue.web }} </a> </li>
             <li> Email: {{ venue.email_address }} </li>
         </ul>
+        <a role="submit" class="btn btn-sm btn-outline-primary" href="{% url 'update_venue' venue.id %}">Update</a>
         </p>
     </div>
 </div>
