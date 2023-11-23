@@ -76,6 +76,18 @@ def update_event(request, event_id):
     return render(request, "events/update_venue.html", {'event': event, 'form': form})
 
 
+def delete_event(request, event_id):
+    event = Event.objects.get(pk=event_id)
+    event.delete()
+    return redirect("list_events")
+
+
+def delete_venue(request, venue_id):
+    venue = Venue.objects.get(pk=venue_id)
+    venue.delete()
+    return redirect("list_venues")
+
+
 def add_venue(request):
     submitted = False
     if request.method == "POST":
