@@ -1,10 +1,18 @@
-from django.http import HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
+
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
+import csv
+
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import A4
 
 
 def home(request, year=datetime.now().year, month=datetime.now().strftime("%B")):
@@ -35,12 +43,12 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime("%B"))
 
 
 def all_events(request):
-    event_list = Event.objects.all()
+    event_list = Event.objects.all().order_by('-event_date')
     return render(request, "events/event_list.html", {'event_list': event_list})
 
 
 def list_venues(request):
-    venue_list = Venue.objects.all()
+    venue_list = Venue.objects.all().order_by('name')
     return render(request, 'events/venues.html', {'venue_list': venue_list})
 
 
@@ -114,3 +122,70 @@ def add_event(request):
         if 'submitted' in request.GET:
             submitted = True
     return render(request, 'events/add_event.html', {'form': form, 'submitted': submitted})
+
+
+def venue_txt(request):
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=venues.txt'
+
+    venues = Venue.objects.all()
+    for venue in venues:
+        response.write(venue.name + '\n')
+        response.write(venue.address + '\n')
+        response.write(venue.zip_code + '\n')
+        response.write(venue.phone + '\n')
+        response.write(venue.web + '\n')
+        response.write(venue.email_address + '\n')
+        response.write("\n\n")
+
+    return response
+
+
+def venue_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=venues.csv'
+
+    # Create a csv writer
+    writer = csv.writer(response)
+
+    # Model
+    venues = Venue.objects.all()
+
+    # Column Names
+    writer.writerow(['Venue Name', 'Addrtess', 'Zip Code',
+                    'Phone', 'Web Addresss', 'Email'])
+
+    # Adding data
+    for venue in venues:
+        writer.writerow([venue.name, venue.address, venue.zip_code,
+                        venue.phone, venue.web, venue.email_address])
+
+    return response
+
+
+def venue_pdf(request):
+
+    venues = Venue.objects.all()
+    # Create a byte stream buffer
+    buf = io.BytesIO()
+    # canvas
+    canv = canvas.Canvas(buf, pagesize=A4, bottomup=0)
+    textObj = canv.beginText()
+    textObj.setTextOrigin(inch, inch)
+    textObj.setFont("Helvetica", 14)
+
+    for venue in venues:
+        textObj.textLine(venue.name)
+        textObj.textLine(venue.zip_code)
+        textObj.textLine(venue.address)
+        textObj.textLine(venue.phone)
+        textObj.textLine(venue.web)
+        textObj.textLine(venue.email_address)
+        textObj.textLine("")
+
+    canv.drawText(textObj)
+    canv.showPage()
+    canv.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=False, filename='venues.pdf')
