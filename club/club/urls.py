@@ -21,3 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('events.urls')),
 ]
+
+admin.site.site_header = "My Club Administartion"
+admin.site.site_title = "Site Admin"
+admin.site.index_title = "Admin area"
