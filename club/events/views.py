@@ -7,6 +7,7 @@ from datetime import datetime
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
 import csv
+from django.core.paginator import Paginator  # for pagination and stuff
 
 from django.http import FileResponse
 import io
@@ -49,7 +50,11 @@ def all_events(request):
 
 def list_venues(request):
     venue_list = Venue.objects.all().order_by('name')
-    return render(request, 'events/venues.html', {'venue_list': venue_list})
+    # Set up pagiantion
+    pag = Paginator(Venue.objects.all(), 1)
+    page = request.GET.get('page')
+    venues = pag.get_page(page)
+    return render(request, 'events/venues.html', {'venue_list': venue_list, 'venues': venues})
 
 
 def show_venue(request, venue_id):
