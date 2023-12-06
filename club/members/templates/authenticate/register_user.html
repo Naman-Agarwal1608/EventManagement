@@ -1,0 +1,25 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<br />
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Your form got some eerors...
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endif %}
+<h1>Register User</h1><br />
+
+
+<form method="POST" action="{% url 'register_user' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <br /><br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+{% endblock content %}
