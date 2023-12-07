@@ -10,16 +10,17 @@
 </div>
 
 {% endif %}
-<h1>Register User</h1><br />
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <h1>Register User</h1><br />
 
 
-<form method="POST" action="{% url 'register_user' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <form method="POST" action="{% url 'register_user' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-    <br /><br />
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
+        <br /><br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
 {% endblock content %}
