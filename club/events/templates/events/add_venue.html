@@ -1,6 +1,7 @@
 {% extends "events/base.html" %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <center>
     <h1>Add Venue To Database</h1><br /><br />
 
@@ -13,9 +14,10 @@
         <input type="submit" value="Submit" class="btn btn-secondary">
     </form>
     {% endif %}
-
-
-
 </center>
+{% else %}
+<br />
+<h2>Sorry! You must be <a href="{% url 'login' %}">logged in </a> to view this page... :(</h2>
+{% endif %}
 
 {% endblock content %}
