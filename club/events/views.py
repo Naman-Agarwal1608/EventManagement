@@ -86,7 +86,7 @@ def update_event(request, event_id):
     if form.is_valid():
         form.save()
         return redirect('list_events')
-    return render(request, "events/update_venue.html", {'event': event, 'form': form})
+    return render(request, "events/update_event.html", {'event': event, 'form': form})
 
 
 def delete_event(request, event_id):
