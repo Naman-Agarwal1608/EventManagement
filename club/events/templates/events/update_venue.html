@@ -2,6 +2,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+{% if user.id == venue.owner %}
 <h2>Update: {{ venue }} </h2>
 <br />
 <form action="" method="post">
@@ -11,9 +12,11 @@
     <center><input type="submit" value="Update" class="btn btn-outline-secondary"></center>
 </form>
 {% else %}
+<h3>Access Denied</h3>
+{% endif %}
+{% else %}
 <br />
 <h2>Sorry! You must be <a href="{% url 'login' %}">logged in </a> to view this page... :(</h2>
 {% endif %}
-
 
 {% endblock content %}
