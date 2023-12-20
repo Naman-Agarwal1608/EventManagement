@@ -1,5 +1,6 @@
 from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib import messages
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
@@ -93,8 +94,16 @@ def update_event(request, event_id):
 
 
 def delete_event(request, event_id):
-    event = Event.objects.get(pk=event_id)
-    event.delete()
+    try:
+        event = Event.objects.get(pk=event_id)
+        if request.user == event.manager:
+            event.delete()
+            messages.success(request, "Event deleted !!!")
+        else:
+            messages.error(
+                request, "You are not authorised to delete this event !!!")
+    except Exception as e:
+        messages.error(request, f"{e}")
     return redirect("list_events")
 
 
