@@ -1,4 +1,4 @@
-from django.http import HttpResponseBadRequest, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 import calendar
@@ -71,7 +71,7 @@ def search_venues(request):
         venues = Venue.objects.filter(name__contains=searched)
         return render(request, "events/search_venues.html", {'searched': searched, 'venues': venues})
     else:
-        return HttpResponseBadRequest("You should not try this...")
+        return render(request, "events/search_venue.html")
 
 
 def update_venue(request, venue_id):
@@ -233,3 +233,12 @@ def my_events(request):
         messages.error(
             request, "You are not authorised to delete this event !!!")
         return render('home')
+
+
+def search_events(request):
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        events = Event.objects.filter(description__contains=searched)
+        return render(request, "events/search_events.html", {'searched': searched, 'events': events})
+    else:
+        return render(request, "events/search_events.html")
