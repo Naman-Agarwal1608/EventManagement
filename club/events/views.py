@@ -6,6 +6,7 @@ from calendar import HTMLCalendar
 from datetime import datetime
 
 from .models import Event, Venue
+from django.contrib.auth.models import User
 from .forms import VenueForm, EventForm, EventFormAdmin
 import csv
 from django.core.paginator import Paginator  # for pagination and stuff
@@ -60,7 +61,8 @@ def list_venues(request):
 
 def show_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
-    return render(request, 'events/show_venue.html', {'venue': venue})
+    venue_owner = User.objects.get(id=venue.owner)
+    return render(request, 'events/show_venue.html', {'venue': venue, 'venue_owner': venue_owner})
 
 
 def search_venues(request):
