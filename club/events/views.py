@@ -221,3 +221,15 @@ def venue_pdf(request):
     buf.seek(0)
 
     return FileResponse(buf, as_attachment=False, filename='venues.pdf')
+
+
+def my_events(request):
+    if request.user.is_authenticated:
+        user = request.user.id
+        event_list = Event.objects.filter(attendees=user)
+        return render(request, 'events/my_events.html', {'event_list': event_list})
+
+    else:
+        messages.error(
+            request, "You are not authorised to delete this event !!!")
+        return render('home')
