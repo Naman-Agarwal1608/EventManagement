@@ -1,3 +1,4 @@
+from re import T
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -12,6 +13,8 @@ class Venue(models.Model):
         'Email Address', max_length=254, blank=True)
     owner = models.IntegerField(
         "Venue Owner", blank=False, null=False, default=1)
+    venue_image = models.ImageField(
+        'Venue Image', null=True, blank=True, upload_to='images/')
 
     def __str__(self):
         return self.name

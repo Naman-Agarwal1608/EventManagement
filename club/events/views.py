@@ -82,7 +82,8 @@ def search_venues(request):
 
 def update_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
-    form = VenueForm(request.POST or None, instance=venue)
+    form = VenueForm(request.POST or None,
+                     request.FILES or None, instance=venue)
     if form.is_valid():
         form.save()
         return redirect('list_venues')
@@ -124,7 +125,7 @@ def delete_venue(request, venue_id):
 def add_venue(request):
     submitted = False
     if request.method == "POST":
-        form = VenueForm(request.POST)
+        form = VenueForm(request.POST, request.FILES)
         if form.is_valid():
             venue = form.save(commit=False)
             venue.owner = request.user.id

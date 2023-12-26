@@ -18,7 +18,13 @@
             <li> Owner: {{ venue_owner }} </li>
             <li> Owner Email: {{ venue_owner.email }} </li>
         </ul>
+        {% if venue.venue_image %}
+        <img src="{{ venue.venue_image.url }}" width="400">
+        {% endif %}
+        <br /><br />
+        {% if user.id == venue.owner %}
         <a role="submit" class="btn btn-sm btn-outline-primary" href="{% url 'update_venue' venue.id %}">Update</a>
+        {% endif %}
         </p>
     </div>
 </div>
