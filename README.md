@@ -68,3 +68,6 @@ Contributions are welcome! If you'd like to contribute to the EventManagement pr
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+## Reference
+
+This project is based on the YouTube course playlist [Django Wednesdays](https://youtube.com/playlist?list=PLCC34OHNcOtqW9BJmgQPPzUpJ8hl49AGy&si=SyD3VB-dsNp3gaLm).
