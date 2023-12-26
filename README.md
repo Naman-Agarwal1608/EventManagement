@@ -1,6 +1,6 @@
 # EventManagement
 
-This repository contains the code for the EventManagement project.
+This repository contains the code for the EventManagement project, a Django-based application for managing events. The application provides a comprehensive set of features for event and user management, including event creation, updation, deletion, user registration, login, profile management, and venue management.
 
 ## Table of Contents
 
@@ -12,7 +12,29 @@ This repository contains the code for the EventManagement project.
 
 ## Description
 
-The EventManagement project is a Django-based application for managing events. It provides features such as event creation, registration, and attendance tracking.
+The EventManagement project is a web application built with Django, designed to simplify event management tasks. It offers a user-friendly interface and a range of features to streamline the event management process.
+
+### Features
+
+#### Event Management
+
+- **Event Creation**: Users can create new events by providing details such as event name, date, time, location, description, and venue.
+- **Event Updation**: Users can update existing events by modifying any of the event details.
+- **Event Deletion**: Users can delete events that are no longer needed.
+
+#### User Management
+
+- **User Registration**: New users can create an account by providing their name, email address, and password.
+- **User Login**: Registered users can log in to their accounts using their email address and password.
+- **User Profile**: Each user has a profile page where they can view and update their personal information.
+- **User Event Registration**: Users can register for events they are interested in attending.
+- **User Event Attendance**: Users can mark their attendance for events they have registered for.
+
+#### Venue Management
+
+- **Venue Creation**: Admin users can create new venues by providing details such as venue name, address, capacity, and contact information.
+- **Venue Updation**: Admin users can update existing venues by modifying any of the venue details.
+- **Venue Deletion**: Admin users can delete venues that are no longer needed.
 
 ## Installation
 
