@@ -252,6 +252,11 @@ def search_events(request):
 
 
 def admin_approval(request):
+    # Get counts
+    event_count = Event.objects.count()
+    venue_count = Venue.objects.count()
+    user_count = User.objects.count()
+
     event_list = Event.objects.order_by('-event_date')
     if request.user.is_superuser:
         if request.method == 'POST':
@@ -264,7 +269,11 @@ def admin_approval(request):
             messages.success(request, "Event's status has been updated !")
             return redirect('list_events')
         else:
-            return render(request, 'events/admin_approval.html', {'event_list': event_list})
+            return render(request, 'events/admin_approval.html',
+                          {'event_list': event_list,
+                           "event_count": event_count,
+                           "venue_count": venue_count,
+                           "user_count": user_count})
     else:
         messages.warning(
             request, "You are not allowed to access this page !!!")
