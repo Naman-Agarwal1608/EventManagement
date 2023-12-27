@@ -249,3 +249,23 @@ def search_events(request):
         return render(request, "events/search_events.html", {'searched': searched, 'events': events})
     else:
         return render(request, "events/search_events.html")
+
+
+def admin_approval(request):
+    event_list = Event.objects.order_by('-event_date')
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            id_list = request.POST.getlist('boxes')
+            event_list.update(approved=False)
+
+            Event.objects.filter(pk__in=list(
+                map(int, id_list))).update(approved=True)
+
+            messages.success(request, "Event's status has been updated !")
+            return redirect('list_events')
+        else:
+            return render(request, 'events/admin_approval.html', {'event_list': event_list})
+    else:
+        messages.warning(
+            request, "You are not allowed to access this page !!!")
+        return redirect('home')

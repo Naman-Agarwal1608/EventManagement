@@ -1,9 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from .models import Venue
 from .models import MyClubUser
 from .models import Event
 
 admin.site.register(MyClubUser)
+
+admin.site.unregister(Group)
 
 
 @admin.register(Venue)
@@ -23,7 +26,8 @@ class VenueAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     '''Admin View for Event'''
 
-    fields = (('name', 'venue'), 'event_date', 'description', 'manager')
+    fields = (('name', 'venue'), 'event_date',
+              'description', 'manager', 'approved')
     list_display = ('name', 'event_date', 'venue')
     list_filter = ('event_date', 'venue')
     # raw_id_fields = ('',)

@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
@@ -39,6 +40,7 @@ class Event(models.Model):
         User, blank=True, null=True, on_delete=models.SET_NULL)
     description = models.TextField(blank=True)
     attendees = models.ManyToManyField(MyClubUser, blank=True)
+    approved = models.BooleanField('Approved', default=False)
 
     def __str__(self):
         return self.name

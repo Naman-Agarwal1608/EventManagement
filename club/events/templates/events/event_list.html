@@ -7,7 +7,11 @@
 
 <div class="card">
     <div class="card-header">
-        {{ event }}
+        {{ event }} | Approval Status: {% if event.approved %}
+        Approved
+        {% else %}
+        Pending
+        {% endif %}
     </div>
     <div class="card-body">
         <h5 class="card-title">Venue: {{ event.venue }}</h5>
