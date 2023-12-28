@@ -68,7 +68,16 @@ def list_venues(request):
 def show_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
     venue_owner = User.objects.get(id=venue.owner)
-    return render(request, 'events/show_venue.html', {'venue': venue, 'venue_owner': venue_owner})
+    event_list = Event.objects.filter(venue=venue)
+    return render(request, 'events/show_venue.html',
+                  {'venue': venue,
+                   'venue_owner': venue_owner,
+                   'event_list': event_list})
+
+
+def show_event(request, event_id):
+    event = Event.objects.get(pk=event_id)
+    return render(request, "events/show_event.html", {'event': event})
 
 
 def search_venues(request):

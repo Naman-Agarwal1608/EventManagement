@@ -25,6 +25,15 @@
         {% if user.id == venue.owner %}
         <a role="submit" class="btn btn-sm btn-outline-primary" href="{% url 'update_venue' venue.id %}">Update</a>
         {% endif %}
+        <br /><br />
+        <h4> Events at this venue: </h4>
+        {% if event_list %}
+        {% for event in event_list %}
+        <a href="{% url 'show_event' event.id %}">{{ event }}</a> <br />
+        {% endfor %}
+        {% else %}
+        No events scheduled at this venue.
+        {% endif %}
         </p>
     </div>
 </div>
