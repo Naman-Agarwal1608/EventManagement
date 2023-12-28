@@ -256,7 +256,8 @@ def admin_approval(request):
     event_count = Event.objects.count()
     venue_count = Venue.objects.count()
     user_count = User.objects.count()
-
+    # Get all venues and events
+    venue_list = Venue.objects.all()
     event_list = Event.objects.order_by('-event_date')
     if request.user.is_superuser:
         if request.method == 'POST':
@@ -273,8 +274,19 @@ def admin_approval(request):
                           {'event_list': event_list,
                            "event_count": event_count,
                            "venue_count": venue_count,
-                           "user_count": user_count})
+                           "user_count": user_count,
+                           "venue_list": venue_list, })
     else:
-        messages.warning(
+        messages.error(
             request, "You are not allowed to access this page !!!")
         return redirect('home')
+
+
+def venue_events(request, venue_id):
+    venue = Venue.objects.get(pk=venue_id)
+    event_list = Event.objects.filter(venue=venue)
+    if event_list:
+        return render(request, "events/venue_events.html", {'event_list': event_list})
+    else:
+        messages.warning(request, "No Events at this Venue...")
+        return redirect('admin_approval')
